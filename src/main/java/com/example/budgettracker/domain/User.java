@@ -25,6 +25,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Payments> payments;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Incomes> incomes;
+
     public long getId() {
         return id;
     }
@@ -87,6 +90,14 @@ public class User {
 
     public void setPayments(Set<Payments> payments) {
         this.payments = payments;
+    }
+
+    public Set<Incomes> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(Set<Incomes> incomes) {
+        this.incomes = incomes;
     }
 
     @Override
