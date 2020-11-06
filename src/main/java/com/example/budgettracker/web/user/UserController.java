@@ -28,4 +28,11 @@ public class UserController {
         UserResponse user = userService.createUser(request);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUser (@PathVariable long id){
+        UserResponse user = userService.getUserResponse(id);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }

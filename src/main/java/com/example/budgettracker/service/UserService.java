@@ -1,6 +1,7 @@
 package com.example.budgettracker.service;
 
 import com.example.budgettracker.domain.User;
+import com.example.budgettracker.exception.ResourcesNotFound;
 import com.example.budgettracker.persistance.UserRepository;
 import com.example.budgettracker.transfer.user.UserResponse;
 import com.example.budgettracker.transfer.user.CreateUserRequest;
@@ -33,6 +34,21 @@ public class UserService {
         User savedUser =userRepository.save(user);
 
         return mapUserResponse(savedUser);
+    }
+
+    public User getUser(long id){
+        LOGGER.info("Getting info for user {}", id);
+
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourcesNotFound("User " + id + " not found"));
+
+        return user;
+    }
+
+    public UserResponse getUserResponse(long id){
+        LOGGER.info("Retrieving user {}", id);
+
+        User user = getUser(id);
+        return mapUserResponse(user);
     }
 
     private UserResponse mapUserResponse (User user){
