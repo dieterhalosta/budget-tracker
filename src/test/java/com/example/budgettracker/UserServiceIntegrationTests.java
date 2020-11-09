@@ -5,6 +5,7 @@ import com.example.budgettracker.service.UserService;
 import com.example.budgettracker.steps.UserTestSteps;
 import com.example.budgettracker.transfer.user.CreateUserRequest;
 import com.example.budgettracker.transfer.user.UserResponse;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,42 @@ public class UserServiceIntegrationTests {
     @Test
     public void getUser_whenNotValidId_thenThrowError(){
         Assertions.assertThrows(ResourcesNotFound.class, () -> userService.getUserResponse(99));
+    }
+
+    @Test
+    public void updateUser_whenExistingUserAndCorrectDetailsPassed_thenReturnUpdateUser(){
+        UserResponse user = userTestSteps.createUser();
+        CreateUserRequest request =new CreateUserRequest();
+        request.setUserName("UpdateUserTest");
+        request.setFirstName("UpdateFirstName");
+        request.setLastName("UpdateLastName");
+        request.setPassword("UpdatedPassword");
+        request.setEmailAddress("UpdatedEmail@test.com");
+
+        UserResponse updateUser = userService.updateUser(user.getId(), request);
+
+
+        assertThat(updateUser, CoreMatchers.notNullValue());
+        assertThat(updateUser.getId(), is(user.getId()));
+        assertThat(updateUser.getFirstName(), is(request.getFirstName()));
+        assertThat(updateUser.getLastName(), is(request.getLastName()));
+        assertThat(updateUser.getUserName(), is(request.getUserName()));
+        assertThat(updateUser.getPassword(), is(request.getPassword()));
+        assertThat(updateUser.getEmailAddress(), is(request.getEmailAddress()));
+
+    }
+
+    @Test
+    public void updateUser_whenUserDoesNotExist_thenThrowError(){
+        CreateUserRequest request =new CreateUserRequest();
+        request.setUserName("UpdateUserTest");
+        request.setFirstName("UpdateFirstName");
+        request.setLastName("UpdateLastName");
+        request.setPassword("UpdatedPassword");
+        request.setEmailAddress("UpdatedEmail@test.com");
+
+        Assertions.assertThrows(ResourcesNotFound.class, () -> userService.updateUser(99, request));
+
     }
 
 }

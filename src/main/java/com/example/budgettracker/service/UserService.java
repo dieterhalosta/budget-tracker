@@ -51,6 +51,22 @@ public class UserService {
         return mapUserResponse(user);
     }
 
+    public UserResponse updateUser(long id, CreateUserRequest request){
+        LOGGER.info("Updating user {}", id);
+
+        User user = getUser(id);
+        user.setUserName(request.getUserName());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmailAddress(request.getEmailAddress());
+        user.setImageUrl(request.getImageUrl());
+        user.setPassword(request.getPassword());
+
+        User updateUser = userRepository.save(user);
+
+        return mapUserResponse(updateUser);
+    }
+
     private UserResponse mapUserResponse (User user){
         UserResponse userResponse = new UserResponse();
         userResponse.setId(user.getId());
