@@ -101,4 +101,13 @@ public class UserServiceIntegrationTests {
 
     }
 
+    @Test
+    public void deleteUser_whenExistingUser_thenReturnNothing(){
+        UserResponse userResponse = userTestSteps.createUser();
+        userService.deleteUser(userResponse.getId());
+
+        Assertions.assertThrows(ResourcesNotFound.class, ()->userService.getUser(userResponse.getId()));
+    }
+
+
 }

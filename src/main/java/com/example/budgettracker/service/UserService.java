@@ -39,9 +39,7 @@ public class UserService {
     public User getUser(long id){
         LOGGER.info("Getting info for user {}", id);
 
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourcesNotFound("User " + id + " not found"));
-
-        return user;
+        return userRepository.findById(id).orElseThrow(() -> new ResourcesNotFound("User " + id + " not found"));
     }
 
     public UserResponse getUserResponse(long id){
@@ -65,6 +63,12 @@ public class UserService {
         User updateUser = userRepository.save(user);
 
         return mapUserResponse(updateUser);
+    }
+
+    public void deleteUser(long id){
+        LOGGER.info("Deleting user {}", id);
+
+        userRepository.deleteById(id);
     }
 
     private UserResponse mapUserResponse (User user){
