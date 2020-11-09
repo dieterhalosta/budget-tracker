@@ -1,5 +1,6 @@
 package com.example.budgettracker.web.user;
 
+import com.example.budgettracker.domain.User;
 import com.example.budgettracker.service.UserService;
 import com.example.budgettracker.transfer.user.CreateUserRequest;
 import com.example.budgettracker.transfer.user.UserResponse;
@@ -34,5 +35,19 @@ public class UserController {
         UserResponse user = userService.getUserResponse(id);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser (@PathVariable long id,@Valid @RequestBody CreateUserRequest request){
+        UserResponse user = userService.updateUser(id, request);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserResponse> deleteUser(@PathVariable long id){
+        userService.deleteUser(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
