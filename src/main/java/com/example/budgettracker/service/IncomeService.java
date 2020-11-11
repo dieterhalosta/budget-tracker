@@ -1,6 +1,7 @@
 package com.example.budgettracker.service;
 
 import com.example.budgettracker.domain.Income;
+import com.example.budgettracker.exception.ResourcesNotFound;
 import com.example.budgettracker.persistance.IncomeRepository;
 import com.example.budgettracker.transfer.income.IncomeResponse;
 import com.example.budgettracker.transfer.income.CreateIncomeRequest;
@@ -33,6 +34,17 @@ public class IncomeService {
         Income savedIncome =incomeRepository.save(income);
 
         return mapIncomeResponse(savedIncome);
+    }
+
+    public Income getIncome(long id){
+        return incomeRepository.findById(id).orElseThrow(() -> new ResourcesNotFound("Income " + id + " not found"));
+    }
+
+    public IncomeResponse getIncomeResponse(long id){
+        LOGGER.info("Retrieving income {}", id);
+        Income income = getIncome(id);
+
+        return mapIncomeResponse(income);
     }
 
     private IncomeResponse mapIncomeResponse(Income income){

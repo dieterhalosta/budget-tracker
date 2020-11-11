@@ -28,4 +28,10 @@ public class IncomeController {
 
         return new ResponseEntity<>(income, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<IncomeResponse> getnIncome(@PathVariable long id){
+        IncomeResponse income = incomesService.getIncomeResponse(id);
+        return new ResponseEntity<>(income, HttpStatus.OK);
+    }
 }

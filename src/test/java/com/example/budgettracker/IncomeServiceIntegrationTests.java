@@ -1,12 +1,19 @@
 package com.example.budgettracker;
 
+import com.example.budgettracker.exception.ResourcesNotFound;
 import com.example.budgettracker.service.IncomeService;
 import com.example.budgettracker.steps.IncomeTestSteps;
+import com.example.budgettracker.transfer.income.IncomeResponse;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -22,5 +29,26 @@ public class IncomeServiceIntegrationTests {
     @Test
     public void createIncome_whenValidRequest_ThenReturnIncome(){
         incomeTestSteps.createIncome();
+    }
+
+    @Test
+    public void getIncome_whenExistingIncome_thenReturnIncome(){
+        IncomeResponse income = incomeTestSteps.createIncome();
+
+        IncomeResponse response = incomeService.getIncomeResponse(income.getId());
+
+        assertThat(response, notNullValue());
+        assertThat(response.getId(), is(response.getId()));
+        assertThat(response.getDescription(), is(response.getDescription()));
+        assertThat(response.getDate(), is(response.getDate()));
+        assertThat(response.getAmount(), is(response.getAmount()));
+        assertThat(response.getCurrency(), is(response.getCurrency()));
+
+
+    }
+
+    @Test
+    public void getIncome_whenNonExistingReview_thenThrowError(){
+        Assertions.assertThrows(ResourcesNotFound.class, ()-> incomeService.getIncomeResponse(0));
     }
 }
