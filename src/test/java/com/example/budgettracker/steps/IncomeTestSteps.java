@@ -1,9 +1,8 @@
 package com.example.budgettracker.steps;
 
-import com.example.budgettracker.domain.User;
-import com.example.budgettracker.service.IncomesService;
+import com.example.budgettracker.service.IncomeService;
 import com.example.budgettracker.transfer.income.IncomeResponse;
-import com.example.budgettracker.transfer.income.SaveIncomeRequest;
+import com.example.budgettracker.transfer.income.CreateIncomeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,20 +17,19 @@ import static org.hamcrest.Matchers.in;
 public class IncomeTestSteps {
 
     @Autowired
-    private IncomesService incomesService;
+    private IncomeService incomesService;
 
     @Autowired
     private UserTestSteps userTestSteps;
 
     public IncomeResponse createIncome(){
 
-
-        SaveIncomeRequest request = new SaveIncomeRequest();
+        CreateIncomeRequest request = new CreateIncomeRequest();
         request.setDescription("TestIncome");
         request.setAmount(123.44);
         request.setCurrency("EUR");
         request.setDate("22.11.2020");
-        request.setUser(user);
+
 
         IncomeResponse income = incomesService.createIncome(request);
 

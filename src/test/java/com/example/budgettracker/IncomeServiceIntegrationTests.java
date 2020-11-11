@@ -1,6 +1,6 @@
 package com.example.budgettracker;
 
-import com.example.budgettracker.service.IncomesService;
+import com.example.budgettracker.service.IncomeService;
 import com.example.budgettracker.steps.IncomeTestSteps;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class IncomeServiceIntegrationTests {
 
     @Autowired
-    private IncomesService incomesService;
+    private IncomeService incomeService;
 
     @Autowired
     private IncomeTestSteps incomeTestSteps;

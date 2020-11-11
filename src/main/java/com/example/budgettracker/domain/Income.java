@@ -3,8 +3,8 @@ package com.example.budgettracker.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity(name = "UserIncomes")
-public class Incomes {
+@Entity
+public class Income {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,9 @@ public class Incomes {
     private double amount;
     @NotNull
     private String currency;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable=false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public long getId() {

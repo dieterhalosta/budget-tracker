@@ -22,11 +22,11 @@ public class User {
     private String password;
     private String imageUrl;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Payments> payments;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Incomes> incomes;
+//    @OneToMany(mappedBy = "user")
+//    private Set<Payment> payments;
+//
+//    @OneToMany(mappedBy = "user")
+//    private Set<Income> income;
 
     public long getId() {
         return id;
@@ -84,21 +84,21 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
-    public Set<Payments> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(Set<Payments> payments) {
-        this.payments = payments;
-    }
-
-    public Set<Incomes> getIncomes() {
-        return incomes;
-    }
-
-    public void setIncomes(Set<Incomes> incomes) {
-        this.incomes = incomes;
-    }
+//    public Set<Payment> getPayments() {
+//        return payments;
+//    }
+//
+//    public void setPayments(Set<Payment> payments) {
+//        this.payments = payments;
+//    }
+//
+//    public Set<Income> getIncome() {
+//        return income;
+//    }
+//
+//    public void setIncomes(Set<Income> incomes) {
+//        this.income = incomes;
+//    }
 
     @Override
     public String toString() {

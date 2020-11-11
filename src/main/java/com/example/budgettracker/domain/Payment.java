@@ -1,11 +1,14 @@
-package com.example.budgettracker.transfer.income;
+package com.example.budgettracker.domain;
 
-import com.example.budgettracker.domain.User;
-
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-public class SaveIncomeRequest {
+@Entity(name = "UserPayments")
+public class Payment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @NotNull
     private String description;
     @NotNull
@@ -14,8 +17,17 @@ public class SaveIncomeRequest {
     private double amount;
     @NotNull
     private String currency;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable=false)
     private User user;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -56,4 +68,16 @@ public class SaveIncomeRequest {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Payments{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                ", amount=" + amount +
+                ", currency='" + currency + '\'' +
+                '}';
+    }
 }
+

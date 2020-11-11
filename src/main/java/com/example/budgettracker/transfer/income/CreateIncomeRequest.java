@@ -1,21 +1,19 @@
 package com.example.budgettracker.transfer.income;
 
-public class IncomeResponse {
+import com.example.budgettracker.domain.User;
 
-    private long id;
+import javax.validation.constraints.NotNull;
+
+public class CreateIncomeRequest {
+
+    @NotNull
     private String description;
+    @NotNull
     private String date;
+    @NotNull
     private double amount;
+    @NotNull
     private String currency;
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;

@@ -1,49 +1,47 @@
 package com.example.budgettracker.service;
 
-import com.example.budgettracker.domain.Incomes;
+import com.example.budgettracker.domain.Income;
 import com.example.budgettracker.persistance.IncomeRepository;
 import com.example.budgettracker.transfer.income.IncomeResponse;
-import com.example.budgettracker.transfer.income.SaveIncomeRequest;
+import com.example.budgettracker.transfer.income.CreateIncomeRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IncomesService {
+public class IncomeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private final IncomeRepository incomeRepository;
 
     @Autowired
-    public IncomesService(IncomeRepository incomeRepository) {
+    public IncomeService(IncomeRepository incomeRepository) {
         this.incomeRepository = incomeRepository;
     }
 
 
-    public IncomeResponse createIncome(SaveIncomeRequest request){
+    public IncomeResponse createIncome(CreateIncomeRequest request){
         LOGGER.info("Creating income {}", request);
 
-        Incomes incomes =new Incomes();
-        incomes.setAmount(request.getAmount());
-        incomes.setCurrency(request.getCurrency());
-        incomes.setDate(request.getDate());
-        incomes.setDescription(request.getDescription());
-        incomes.setUser(request.getUser());
+        Income income = new Income();
+        income.setAmount(request.getAmount());
+        income.setCurrency(request.getCurrency());
+        income.setDate(request.getDate());
+        income.setDescription(request.getDescription());
 
-        Incomes saveIncome =incomeRepository.save(incomes);
+        Income savedIncome =incomeRepository.save(income);
 
-        return mapIncomeResponse(saveIncome);
+        return mapIncomeResponse(savedIncome);
     }
 
-    private IncomeResponse mapIncomeResponse(Incomes income){
+    private IncomeResponse mapIncomeResponse(Income income){
         IncomeResponse incomeResponse = new IncomeResponse();
         incomeResponse.setId(income.getId());
         incomeResponse.setDescription(income.getDescription());
         incomeResponse.setCurrency(income.getCurrency());
         incomeResponse.setAmount(income.getAmount());
         incomeResponse.setDate(income.getDate());
-        incomeResponse.setUser(income.getUser());
 
         return incomeResponse;
     }

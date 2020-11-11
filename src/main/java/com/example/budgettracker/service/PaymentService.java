@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class PaymentsService {
+public class PaymentService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final PaymentRepository paymentRepository;
 
     @Autowired
-    public PaymentsService(PaymentRepository paymentRepository){this.paymentRepository = paymentRepository;}
+    public PaymentService(PaymentRepository paymentRepository){this.paymentRepository = paymentRepository;}
 }
