@@ -30,8 +30,14 @@ public class IncomeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<IncomeResponse> getnIncome(@PathVariable long id){
+    public ResponseEntity<IncomeResponse> getIncome(@PathVariable long id){
         IncomeResponse income = incomesService.getIncomeResponse(id);
         return new ResponseEntity<>(income, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<IncomeResponse> updateIncome (@PathVariable long id,@Valid @RequestBody CreateIncomeRequest request){
+           IncomeResponse income = incomesService.updateIncome(id, request);
+           return new ResponseEntity<>(income, HttpStatus.OK);
     }
 }

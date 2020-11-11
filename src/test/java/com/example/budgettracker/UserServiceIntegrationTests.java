@@ -97,7 +97,7 @@ public class UserServiceIntegrationTests {
         request.setPassword("UpdatedPassword");
         request.setEmailAddress("UpdatedEmail@test.com");
 
-        Assertions.assertThrows(ResourcesNotFound.class, () -> userService.updateUser(99, request));
+        Assertions.assertThrows(ResourcesNotFound.class, () -> userService.updateUser(0, request));
 
     }
 

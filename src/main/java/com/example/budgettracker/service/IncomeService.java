@@ -47,6 +47,21 @@ public class IncomeService {
         return mapIncomeResponse(income);
     }
 
+    public IncomeResponse updateIncome(long id, CreateIncomeRequest request){
+        LOGGER.info("Updating income {}", id);
+
+        Income income = getIncome(id);
+        income.setDescription(request.getDescription());
+        income.setDate(request.getDate());
+        income.setAmount(request.getAmount());
+        income.setCurrency(request.getCurrency());
+
+        Income updatedIncome = incomeRepository.save(income);
+
+        return mapIncomeResponse(updatedIncome);
+
+    }
+
     private IncomeResponse mapIncomeResponse(Income income){
         IncomeResponse incomeResponse = new IncomeResponse();
         incomeResponse.setId(income.getId());

@@ -3,7 +3,9 @@ package com.example.budgettracker;
 import com.example.budgettracker.exception.ResourcesNotFound;
 import com.example.budgettracker.service.IncomeService;
 import com.example.budgettracker.steps.IncomeTestSteps;
+import com.example.budgettracker.transfer.income.CreateIncomeRequest;
 import com.example.budgettracker.transfer.income.IncomeResponse;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +52,37 @@ public class IncomeServiceIntegrationTests {
     @Test
     public void getIncome_whenNonExistingReview_thenThrowError(){
         Assertions.assertThrows(ResourcesNotFound.class, ()-> incomeService.getIncomeResponse(0));
+    }
+
+    @Test
+    public void updateIncome_whenExistingIncome_thenReturnUpdatedIncome(){
+        IncomeResponse income = incomeTestSteps.createIncome();
+
+        CreateIncomeRequest request = new CreateIncomeRequest();
+        request.setDescription("UpdatedIncomeTest");
+        request.setDate("15-05-2020");
+        request.setAmount(689.22);
+        request.setCurrency("EUR");
+
+        IncomeResponse updatedIncome = incomeService.updateIncome(income.getId(), request);
+
+        assertThat(updatedIncome, CoreMatchers.notNullValue());
+        assertThat(updatedIncome.getId(), is(income.getId()));
+        assertThat(updatedIncome.getDescription(), is(request.getDescription()));
+        assertThat(updatedIncome.getDate(), is(request.getDate()));
+        assertThat(updatedIncome.getAmount(), is(request.getAmount()));
+        assertThat(updatedIncome.getCurrency(), is(request.getCurrency()));
+    }
+
+    @Test
+    public void updateIncome_whenIncomeDoesNotExist_thenThrowError(){
+        CreateIncomeRequest request = new CreateIncomeRequest();
+        request.setDescription("UpdatedIncomeTest");
+        request.setDate("15-05-2020");
+        request.setAmount(689.22);
+        request.setCurrency("EUR");
+
+        Assertions.assertThrows(ResourcesNotFound.class, ()->incomeService.updateIncome(0,request));
+
     }
 }
