@@ -85,4 +85,13 @@ public class IncomeServiceIntegrationTests {
         Assertions.assertThrows(ResourcesNotFound.class, ()->incomeService.updateIncome(0,request));
 
     }
+
+    @Test
+    public void deleteIncome_whenExistingIncome_thenReturnNothing(){
+        IncomeResponse income = incomeTestSteps.createIncome();
+
+        incomeService.deleteIncome(income.getId());
+
+        Assertions.assertThrows(ResourcesNotFound.class, ()->incomeService.getIncome(income.getId()));
+    }
 }

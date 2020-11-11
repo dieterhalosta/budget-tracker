@@ -62,6 +62,12 @@ public class IncomeService {
 
     }
 
+    public void deleteIncome(long id){
+        LOGGER.info("Deleting income {}", id);
+
+        incomeRepository.deleteById(id);
+    }
+
     private IncomeResponse mapIncomeResponse(Income income){
         IncomeResponse incomeResponse = new IncomeResponse();
         incomeResponse.setId(income.getId());

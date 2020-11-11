@@ -1,5 +1,6 @@
 package com.example.budgettracker.web;
 
+import com.example.budgettracker.domain.Income;
 import com.example.budgettracker.service.IncomeService;
 import com.example.budgettracker.transfer.income.IncomeResponse;
 import com.example.budgettracker.transfer.income.CreateIncomeRequest;
@@ -39,5 +40,12 @@ public class IncomeController {
     public ResponseEntity<IncomeResponse> updateIncome (@PathVariable long id,@Valid @RequestBody CreateIncomeRequest request){
            IncomeResponse income = incomesService.updateIncome(id, request);
            return new ResponseEntity<>(income, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<IncomeResponse> deleteIncome (@PathVariable long id){
+        incomesService.deleteIncome(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
