@@ -99,4 +99,15 @@ public class PaymentServiceIntegrationTests {
         Assertions.assertThrows(ResourcesNotFound.class, ()-> paymentService.updatePayment(0, request));
 
     }
+
+
+    @Test
+    public void deletePayment_whenExistingPayment_thenReturnNothing(){
+        PaymentResponse payment = paymentTestSteps.createPayment();
+
+        paymentService.deletePayment(payment.getId());
+
+        Assertions.assertThrows(ResourcesNotFound.class, ()->paymentService.getPayment(payment.getId()));
+    }
+
 }

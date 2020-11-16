@@ -61,6 +61,13 @@ public class PaymentService {
 
     }
 
+    public void deletePayment(long id){
+        LOGGER.info("Deleteing payment {}", id);
+
+        paymentRepository.deleteById(id);
+
+    }
+
 
     private PaymentResponse mapPaymentResponse(Payment payment){
         PaymentResponse paymentResponse = new PaymentResponse();
