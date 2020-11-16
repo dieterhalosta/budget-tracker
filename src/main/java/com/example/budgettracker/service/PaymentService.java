@@ -46,6 +46,21 @@ public class PaymentService {
         return mapPaymentResponse(payment);
     }
 
+    public PaymentResponse updatePayment(long id, CreatePaymentRequest request){
+        LOGGER.info("Updating payment {}", id);
+
+        Payment payment = getPayment(id);
+        payment.setAmount(request.getAmount());
+        payment.setCurrency(request.getCurrency());
+        payment.setDate(request.getDate());
+        payment.setDescription(request.getDescription());
+
+        Payment updatedPayment = paymentRepository.save(payment);
+
+        return mapPaymentResponse(updatedPayment);
+
+    }
+
 
     private PaymentResponse mapPaymentResponse(Payment payment){
         PaymentResponse paymentResponse = new PaymentResponse();

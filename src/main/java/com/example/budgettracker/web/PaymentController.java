@@ -34,4 +34,11 @@ public class PaymentController {
         return new ResponseEntity<>(payment, HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PaymentResponse> updatePayment(@PathVariable long id, @RequestBody @Valid CreatePaymentRequest request){
+        PaymentResponse payment = paymentService.updatePayment(id, request);
+
+        return new ResponseEntity<>(payment, HttpStatus.OK);
+    }
+
 }

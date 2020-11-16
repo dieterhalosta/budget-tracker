@@ -6,6 +6,7 @@ import com.example.budgettracker.service.PaymentService;
 import com.example.budgettracker.steps.PaymentTestSteps;
 import com.example.budgettracker.transfer.payment.CreatePaymentRequest;
 import com.example.budgettracker.transfer.payment.PaymentResponse;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,38 @@ public class PaymentServiceIntegrationTests {
     @Test
     public void getPayment_whenNonExistingPayment_thenThrowError(){
         Assertions.assertThrows(ResourcesNotFound.class, ()-> paymentService.getPaymentResponse(0));
+    }
+
+    @Test
+    public void updatePayment_whenValidRequest_thenReturnUpdatedPayment(){
+        PaymentResponse payment = paymentTestSteps.createPayment();
+
+        CreatePaymentRequest request = new CreatePaymentRequest();
+        request.setDescription("UpdatedPaymentTest");
+        request.setDate("05-05-2020");
+        request.setAmount(633.22);
+        request.setCurrency("EUR");
+
+
+        PaymentResponse updatedPayment = paymentService.updatePayment(payment.getId(), request);
+
+        assertThat(updatedPayment, CoreMatchers.notNullValue());
+        assertThat(updatedPayment.getId(), is(payment.getId()));
+        assertThat(updatedPayment.getDescription(), is(request.getDescription()));
+        assertThat(updatedPayment.getDate(), is(request.getDate()));
+        assertThat(updatedPayment.getAmount(), is(request.getAmount()));
+        assertThat(updatedPayment.getCurrency(), is(request.getCurrency()));
+    }
+
+    @Test
+    public void updatePayment_whenPaymentDoesNotExist_thenThrowError(){
+        CreatePaymentRequest request = new CreatePaymentRequest();
+        request.setDescription("UpdatedPaymentTest");
+        request.setDate("05-05-2020");
+        request.setAmount(633.22);
+        request.setCurrency("EUR");
+
+        Assertions.assertThrows(ResourcesNotFound.class, ()-> paymentService.updatePayment(0, request));
+
     }
 }
