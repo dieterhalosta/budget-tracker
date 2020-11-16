@@ -27,4 +27,11 @@ public class PaymentController {
 
         return new ResponseEntity<>(payment, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PaymentResponse> getPayment(@PathVariable long id){
+        PaymentResponse payment = paymentService.getPaymentResponse(id);
+        return new ResponseEntity<>(payment, HttpStatus.OK);
+    }
+
 }

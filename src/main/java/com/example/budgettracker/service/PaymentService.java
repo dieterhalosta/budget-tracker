@@ -1,6 +1,7 @@
 package com.example.budgettracker.service;
 
 import com.example.budgettracker.domain.Payment;
+import com.example.budgettracker.exception.ResourcesNotFound;
 import com.example.budgettracker.persistance.PaymentRepository;
 import com.example.budgettracker.transfer.payment.CreatePaymentRequest;
 import com.example.budgettracker.transfer.payment.PaymentResponse;
@@ -30,6 +31,19 @@ public class PaymentService {
         Payment savedPayment = paymentRepository.save(payment);
 
         return mapPaymentResponse(savedPayment);
+    }
+
+    public Payment getPayment(long id){
+        LOGGER.info("Getting payment {}", id);
+
+       return paymentRepository.findById(id).orElseThrow(() -> new ResourcesNotFound("Payment " + id + " not found"));
+
+    }
+
+    public PaymentResponse getPaymentResponse(long id){
+        Payment payment = getPayment(id);
+
+        return mapPaymentResponse(payment);
     }
 
 

@@ -50,7 +50,7 @@ public class IncomeServiceIntegrationTests {
     }
 
     @Test
-    public void getIncome_whenNonExistingReview_thenThrowError(){
+    public void getIncome_whenNonExistingIncome_thenThrowError(){
         Assertions.assertThrows(ResourcesNotFound.class, ()-> incomeService.getIncomeResponse(0));
     }
 
